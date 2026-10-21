@@ -1,28 +1,37 @@
 class Solution {
     public boolean isValidSudoku(char[][] board) {
-        Set<Character>[] rows = new HashSet[9];
-        Set<Character>[] cols = new HashSet[9];
-        Set<Character>[] boxes = new HashSet[9];
+        List<Set<Character>> rows = new ArrayList<>();
+        List<Set<Character>> boxes = new ArrayList<>();
+        List<Set<Character>> cols = new ArrayList<>();
 
-        for(int i=0; i<9; i++){
-            rows[i] = new HashSet<>();
-            cols[i] = new HashSet<>();
-            boxes[i] = new HashSet<>();
+        for (int i = 0; i < 9; i++) {
+            rows.add(new HashSet<>());
+            cols.add(new HashSet<>());
+            boxes.add(new HashSet<>());
         }
 
-        for(int i=0 ;i<9; i++){
+
+        for(int i=0; i<9; i++){
             for(int j=0; j<9; j++){
 
-                if(board[i][j] == '.'){
+                char c = board[i][j];
+                if(c == '.'){
                     continue;
                 }
-            int k = ((i/3)*3)+(j/3);
 
-            if(!rows[i].add(board[i][j]) || !cols[j].add(board[i][j]) || !boxes[k].add(board[i][j])){
-            return false;
-            }
+                
+                int n = i/3;
+                int m = j/3;
+                int boxeIndex = (n*3) + m;
+                if(!rows.get(i).add(board[i][j]) || !cols.get(j).add(board[i][j]) || !boxes.get(boxeIndex).add(board[i][j])){
+                    return false;
+                } 
+                
+                
             }
         }
         return true;
+
+        
     }
 }
