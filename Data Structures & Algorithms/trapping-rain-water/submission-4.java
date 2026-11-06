@@ -1,30 +1,50 @@
 class Solution {
     public int trap(int[] height) {
-        int left = 0;
-        int right = height.length - 1;
+        // int size = height.length;
+        // int[] result = new int[size];
+        // int r = 0;
 
-        int total = 0;
-        int leftMax = 0;
-        int rightMax = 0;
+        // for(int i=1; i<size-1; i++){
+        //     int left = i-1;
+        //     int right = i+1;
+        //     int leftMax = 0;
+        //     int rightMax = 0;
+        //     while(left>=0 && right<size){
+        //         leftMax = Math.max(leftMax, height[left]);
+        //         left--;
+        //         rightMax = Math.max(rightMax, height[right]);
+        //         right++;
+        //     }
 
-        while (left < right){
-            if(height[left] <= height[right]){
-                if(height[left] >= leftMax){
-                    leftMax = height[left];
-                }else{
-                    total += leftMax - height[left];
-                }
-                left++;
-            }else{
-                if(height[right] >= rightMax){
-                    rightMax = height[right];
-                }else{
-                    total += rightMax - height[right];
-                }
+        //     result[i] = Math.max(0, (Math.min(leftMax, rightMax) - height[i]));
 
-                right--;
-            }
+        // }
+        // for(int j : result){
+        //     r += j;
+        // }
+        // return r;
+
+
+        int size = height.length;
+        int result = 0;
+
+        int[] leftMax = new int[size];
+        leftMax[0] = height[0];
+        for(int i=1; i<size; i++){
+            leftMax[i] = Math.max(leftMax[i-1], height[i]);
         }
-        return total;
+
+        int[] rightMax = new int[size];
+        rightMax[size-1] = height[size-1];
+        for(int i=size-2; i>=0; i--){
+            rightMax[i] = Math.max(rightMax[i+1], height[i]);
+        }
+
+        for(int i=1; i<size-1; i++){
+            result += Math.max(0, (Math.min(leftMax[i], rightMax[i]) - height[i]));
+
+        }
+        return result;
+        
     }
 }
